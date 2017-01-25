@@ -24,3 +24,7 @@
 6. Show default text when no items
 
 ![View](./6_todo_item_fallback.png)
+
+7. Add scrolling to the list
+
+![View](./7_todo_item_scrollview.png)

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 
 import Button from './Button';
 import TodoItem from './TodoItem';
 
-let counterId = 0;
+let counterId = 23;
 
 const white = 'white';
 const styles = StyleSheet.create({
@@ -20,13 +20,40 @@ const styles = StyleSheet.create({
     color: white,
     fontWeight: 'bold',
   },
+  scrollView: {
+    alignSelf: 'stretch',
+  },
 });
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [],
+      todos: [
+        { id: 23, selected: false, text: 'scroll' },
+        { id: 22, selected: false, text: 'to' },
+        { id: 21, selected: false, text: 'need' },
+        { id: 20, selected: false, text: "I'll" },
+        { id: 19, selected: false, text: 'before' },
+        { id: 18, selected: false, text: 'need' },
+        { id: 17, selected: false, text: "i'll" },
+        { id: 16, selected: false, text: 'items' },
+        { id: 15, selected: false, text: 'much' },
+        { id: 14, selected: false, text: 'how' },
+        { id: 13, selected: false, text: 'sure' },
+        { id: 12, selected: false, text: 'not' },
+        { id: 11, selected: false, text: "i'm" },
+        { id: 10, selected: false, text: 'but' },
+        { id: 9, selected: false, text: 'Scrollview' },
+        { id: 8, selected: false, text: 'A' },
+        { id: 7, selected: false, text: 'With' },
+        { id: 6, selected: false, text: 'Develop' },
+        { id: 5, selected: false, text: 'To' },
+        { id: 4, selected: false, text: 'Test' },
+        { id: 3, selected: false, text: 'A' },
+        { id: 2, selected: false, text: 'Is' },
+        { id: 1, selected: false, text: 'This' },
+      ],
     };
   }
 
@@ -58,26 +85,28 @@ class TodoList extends Component {
   }
 
   render() {
-    console.log('ids:', this.state.todos.map(({ id }) => id));
+    console.log('State:', JSON.stringify(this.state, null, 2));
 
     return (
       <View style={styles.wrapper}>
         <Button onPress={() => this.addTodoItem()} style={styles.buttonStyle}>
           <Text style={styles.addText}>Add</Text>
         </Button>
-        {
-          this.state.todos.length === 0
-          ? <Text>No todos yet</Text>
-          : this.state.todos.map(({ id, selected, text }) => (
-            <TodoItem
-              key={id}
-              selected={selected}
-              text={text}
-              onChange={values => this.changeTodoItem(id, values)}
-              onDelete={() => this.removeTodoItem(id)}
-            />
-          ))
-        }
+        <ScrollView style={styles.scrollView}>
+          {
+            this.state.todos.length === 0
+            ? <Text>No todos yet</Text>
+            : this.state.todos.map(({ id, selected, text }) => (
+              <TodoItem
+                key={id}
+                selected={selected}
+                text={text}
+                onChange={values => this.changeTodoItem(id, values)}
+                onDelete={() => this.removeTodoItem(id)}
+              />
+            ))
+          }
+        </ScrollView>
       </View>
     );
   }
