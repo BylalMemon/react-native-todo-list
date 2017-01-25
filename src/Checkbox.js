@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import { View, StyleSheet, TouchableHighlight } from 'react-native';
 
 const white = 'white';
@@ -24,29 +24,23 @@ const styles = StyleSheet.create({
   },
 });
 
-class Checkbox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: false,
-    };
-  }
+type Props = {
+  value: Boolean,
+  onChange: (val: Boolean) => void,
+};
 
-  render() {
-    return (
-      <TouchableHighlight
-        onPress={() => this.setState(state => ({ selected: !state.selected }))}
-        style={styles.background}
-        underlayColor="whitesmoke"
-      >
-        {
-          this.state.selected
-            ? <View style={styles.fill} />
-            : <View />
-        }
-      </TouchableHighlight>
-    );
-  }
-}
+const Checkbox = ({ value, onChange }: Props) => (
+  <TouchableHighlight
+    onPress={() => onChange(!value)}
+    style={styles.background}
+    underlayColor="whitesmoke"
+  >
+    {
+      value
+        ? <View style={styles.fill} />
+        : <View />
+    }
+  </TouchableHighlight>
+);
 
 export default Checkbox;

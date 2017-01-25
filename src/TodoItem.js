@@ -53,7 +53,7 @@ class TodoItem extends Component {
   render() {
     return (
       <View style={styles.wrapper}>
-        <Checkbox />
+        <Checkbox value={this.state.selected} onChange={val => this.setState({ selected: val })} />
         <TouchableHighlight
           style={styles.textWrapper}
           onPress={() => this.setState({ editing: true })}
