@@ -40,12 +40,19 @@ const styles = StyleSheet.create({
   },
 });
 
+type Props = {
+  selected: Boolean,
+  text: string,
+  onChange: () => void,
+  onDelete: () => void,
+};
+
 class TodoItem extends Component {
+  props: Props
+
   constructor(props) {
     super(props);
     this.state = {
-      selected: false,
-      text: 'buy milk',
       editing: false,
     };
   }
@@ -53,7 +60,10 @@ class TodoItem extends Component {
   render() {
     return (
       <View style={styles.wrapper}>
-        <Checkbox value={this.state.selected} onChange={val => this.setState({ selected: val })} />
+        <Checkbox
+          value={this.props.selected}
+          onChange={val => this.props.onChange({ selected: val })}
+        />
         <TouchableHighlight
           style={styles.textWrapper}
           onPress={() => this.setState({ editing: true })}
@@ -64,14 +74,14 @@ class TodoItem extends Component {
             ? (
               <TextInput
                 autoFocus
-                defaultValue={this.state.text}
-                onChangeText={text => this.setState({ text })}
+                defaultValue={this.props.text}
+                onChangeText={text => this.props.onChange({ text })}
                 style={styles.input}
               />
             )
             : (
               <Text style={styles.todoText}>
-                {this.state.text}
+                {this.props.text}
               </Text>
             )
           }
@@ -79,7 +89,15 @@ class TodoItem extends Component {
         {
           this.state.editing
             ? <Button title="Done" onPress={() => this.setState({ editing: false })} />
-            : <Image source={deleteIcon} style={styles.delete} />
+            : (
+              <TouchableHighlight
+                style={styles.delete}
+                onPress={() => this.props.onDelete()}
+                underlayColor="lightgray"
+              >
+                <Image source={deleteIcon} style={styles.delete} />
+              </TouchableHighlight>
+            )
         }
       </View>
     );

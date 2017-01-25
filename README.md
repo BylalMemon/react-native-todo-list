@@ -12,3 +12,7 @@
 3. Create the edit view for the TodoItem
 
 ![View](./3_todo_item_edit_view.png)
+
+4. Create list of todo items
+
+![View](./4_todo_item_list.png)

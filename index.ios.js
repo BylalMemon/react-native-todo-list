@@ -5,29 +5,14 @@
  */
 
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import TodoItem from './src/TodoItem';
+import { AppRegistry } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
+import TodoList from './src/TodoList';
 
 export default class todo extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <TodoItem />
-      </View>
+      <TodoList />
     );
   }
 }
