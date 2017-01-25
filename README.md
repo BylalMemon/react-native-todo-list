@@ -1,3 +1,6 @@
 # React-Native-Todo-List
 
-![Screenshot of app](./app_screenshot.png)
+1. Create a checkbox
+
+![Unchecked](./1_checkbox_unchecked.png)
+![Checked](./1_checkbox_checked.png)
