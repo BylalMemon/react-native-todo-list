@@ -20,3 +20,7 @@
 5. Add todo items to the list
 
 ![View](./5_todo_item_add.png)
+
+6. Show default text when no items
+
+![View](./6_todo_item_fallback.png)

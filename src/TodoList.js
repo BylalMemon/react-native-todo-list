@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     paddingTop: 20,
+    alignItems: 'center',
+  },
+  buttonStyle: {
+    alignSelf: 'stretch',
   },
   addText: {
     color: white,
@@ -58,11 +62,13 @@ class TodoList extends Component {
 
     return (
       <View style={styles.wrapper}>
-        <Button onPress={() => this.addTodoItem()}>
+        <Button onPress={() => this.addTodoItem()} style={styles.buttonStyle}>
           <Text style={styles.addText}>Add</Text>
         </Button>
         {
-          this.state.todos.map(({ id, selected, text }) => (
+          this.state.todos.length === 0
+          ? <Text>No todos yet</Text>
+          : this.state.todos.map(({ id, selected, text }) => (
             <TodoItem
               key={id}
               selected={selected}
