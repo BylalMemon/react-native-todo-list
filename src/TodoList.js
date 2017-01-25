@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
+import Button from './Button';
 import TodoItem from './TodoItem';
 
+let counterId = 0;
+
+const white = 'white';
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     paddingTop: 20,
+  },
+  addText: {
+    color: white,
+    fontWeight: 'bold',
   },
 });
 
@@ -14,19 +22,18 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: [
-        {
-          id: 1,
-          selected: false,
-          text: 'Buy milk',
-        },
-        {
-          id: 2,
-          selected: false,
-          text: 'Buy potatoes',
-        },
-      ],
+      todos: [],
     };
+  }
+
+  addTodoItem() {
+    counterId += 1;
+
+    const newTodo = { id: counterId, selected: false, text: '' };
+
+    this.setState({
+      todos: [newTodo, ...this.state.todos],
+    });
   }
 
   changeTodoItem(id, values) {
@@ -47,8 +54,13 @@ class TodoList extends Component {
   }
 
   render() {
+    console.log('ids:', this.state.todos.map(({ id }) => id));
+
     return (
       <View style={styles.wrapper}>
+        <Button onPress={() => this.addTodoItem()}>
+          <Text style={styles.addText}>Add</Text>
+        </Button>
         {
           this.state.todos.map(({ id, selected, text }) => (
             <TodoItem

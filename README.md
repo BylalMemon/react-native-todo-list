@@ -16,3 +16,7 @@
 4. Create list of todo items
 
 ![View](./4_todo_item_list.png)
+
+5. Add todo items to the list
+
+![View](./5_todo_item_add.png)

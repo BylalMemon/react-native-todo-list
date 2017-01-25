@@ -53,7 +53,7 @@ class TodoItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editing: false,
+      editing: this.props.text.length === 0,
     };
   }
 
