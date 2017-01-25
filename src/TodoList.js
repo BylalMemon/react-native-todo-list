@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ListView, StyleSheet } from 'react-native';
 
 import Button from './Button';
 import TodoItem from './TodoItem';
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     color: white,
     fontWeight: 'bold',
   },
-  scrollView: {
+  listView: {
     alignSelf: 'stretch',
   },
 });
@@ -57,6 +57,12 @@ class TodoList extends Component {
     };
   }
 
+  componentWillMount() {
+    this.dataSource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    });
+  }
+
   addTodoItem() {
     counterId += 1;
 
@@ -86,27 +92,34 @@ class TodoList extends Component {
 
   render() {
     console.log('State:', JSON.stringify(this.state, null, 2));
+    const todos = this.dataSource.cloneWithRows(this.state.todos);
 
     return (
       <View style={styles.wrapper}>
         <Button onPress={() => this.addTodoItem()} style={styles.buttonStyle}>
           <Text style={styles.addText}>Add</Text>
         </Button>
-        <ScrollView style={styles.scrollView}>
-          {
+        {
             this.state.todos.length === 0
             ? <Text>No todos yet</Text>
-            : this.state.todos.map(({ id, selected, text }) => (
-              <TodoItem
-                key={id}
-                selected={selected}
-                text={text}
-                onChange={values => this.changeTodoItem(id, values)}
-                onDelete={() => this.removeTodoItem(id)}
+            : (
+              <ListView
+                style={styles.listView}
+                dataSource={todos}
+                renderRow={
+                  ({ id, selected, text }) => (
+                    <TodoItem
+                      key={id}
+                      selected={selected}
+                      text={text}
+                      onChange={values => this.changeTodoItem(id, values)}
+                      onDelete={() => this.removeTodoItem(id)}
+                    />
+                  )
+                }
               />
-            ))
+            )
           }
-        </ScrollView>
       </View>
     );
   }
