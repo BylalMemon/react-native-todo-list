@@ -11,7 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
-import Checkbox from './src/Checkbox';
+import TodoItem from './src/TodoItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +26,7 @@ export default class todo extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Checkbox />
+        <TodoItem />
       </View>
     );
   }
