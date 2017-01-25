@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Image, Button, TouchableHighlight, StyleSheet } from 'react-native';
 import Checkbox from './Checkbox';
 import deleteIcon from './assets/delete.png';
 
@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
   todoText: {
     fontSize: 17,
   },
+  input: {
+    height: 40,
+  },
   delete: {
     width: 25,
     height: 25,
@@ -42,6 +45,8 @@ class TodoItem extends Component {
     super(props);
     this.state = {
       selected: false,
+      text: 'buy milk',
+      editing: false,
     };
   }
 
@@ -49,12 +54,33 @@ class TodoItem extends Component {
     return (
       <View style={styles.wrapper}>
         <Checkbox />
-        <View style={styles.textWrapper}>
-          <Text style={styles.todoText}>
-            Buy milk
-          </Text>
-        </View>
-        <Image source={deleteIcon} style={styles.delete} />
+        <TouchableHighlight
+          style={styles.textWrapper}
+          onPress={() => this.setState({ editing: true })}
+          underlayColor="lightgray"
+        >
+          {
+            this.state.editing
+            ? (
+              <TextInput
+                autoFocus
+                defaultValue={this.state.text}
+                onChangeText={text => this.setState({ text })}
+                style={styles.input}
+              />
+            )
+            : (
+              <Text style={styles.todoText}>
+                {this.state.text}
+              </Text>
+            )
+          }
+        </TouchableHighlight>
+        {
+          this.state.editing
+            ? <Button title="Done" onPress={() => this.setState({ editing: false })} />
+            : <Image source={deleteIcon} style={styles.delete} />
+        }
       </View>
     );
   }
