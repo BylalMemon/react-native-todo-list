@@ -7,18 +7,19 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 // const mapDispatchToProps = (dispatch, ownProps) => PropsToMergeWith_TodoListContainer_Props;
+// Dispatch isn't really needed, connect can automatically wrap the functions with dispatch
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addTodo: () => dispatch({
+  addTodo: () => ({
     type: 'ADD_TODO',
     payload: {
       text: '',
     },
   }),
-  editTodo: (id, values) => dispatch({
+  editTodo: (id, values) => ({
     type: 'EDIT_TODO',
     payload: { id, ...values },
   }),
-  deleteTodo: id => dispatch({
+  deleteTodo: id => ({
     type: 'DELETE_TODO',
     payload: { id },
   }),
