@@ -24,59 +24,31 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  subscribe: () => void,
-  getState: () => void,
-  dispatch: () => void,
+  todos: Array<Object>,
+  addTodo: () => void,
+  editTodo: () => void,
+  deleteTodo: () => void,
 };
 
 class TodoList extends Component {
   props: Props
 
-  constructor(props) {
-    super(props);
-    this.state = this.props.getState();
-  }
-
   componentWillMount() {
-    this.props.subscribe(() => {
-      const newState = this.props.getState();
-
-      this.setState(newState);
-    });
-
     this.dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
   }
 
   render() {
-    console.log('State:', JSON.stringify(this.state, null, 2));
-    const todos = this.dataSource.cloneWithRows(this.state.todos);
-
-    const dispatchAdd = () => this.props.dispatch({
-      type: 'ADD_TODO',
-      payload: {
-        text: '',
-      },
-    });
-
-    const dispatchEdit = (id, values) => this.props.dispatch({
-      type: 'EDIT_TODO',
-      payload: { id, ...values },
-    });
-
-    const dispatchDelete = id => this.props.dispatch({
-      type: 'DELETE_TODO',
-      payload: { id },
-    });
+    const todos = this.dataSource.cloneWithRows(this.props.todos);
 
     return (
       <View style={styles.wrapper}>
-        <Button onPress={dispatchAdd} style={styles.buttonStyle}>
+        <Button onPress={() => this.props.addTodo()} style={styles.buttonStyle}>
           <Text style={styles.addText}>Add</Text>
         </Button>
         {
-            this.state.todos.length === 0
+            this.props.todos.length === 0
             ? <Text>No todos yet</Text>
             : (
               <ListView
@@ -88,8 +60,8 @@ class TodoList extends Component {
                       key={id}
                       selected={selected}
                       text={text}
-                      onChange={values => dispatchEdit(id, values)}
-                      onDelete={() => dispatchDelete(id)}
+                      onChange={values => this.props.editTodo(id, values)}
+                      onDelete={() => this.props.deleteTodo(id)}
                     />
                   )
                 }

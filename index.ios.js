@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import { createStore } from 'redux';
 
-import TodoList from './src/TodoList';
+import TodoListContainer from './src/TodoListContainer';
 
 const initialState = {
   todos: [],
@@ -70,7 +70,7 @@ const store = createStore(reducer, initialState);
 export default class todo extends Component {
   render() {
     return (
-      <TodoList
+      <TodoListContainer
         dispatch={store.dispatch}
         subscribe={store.subscribe}
         getState={store.getState}
