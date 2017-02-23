@@ -8,21 +8,29 @@ const mapStateToProps = (state, ownProps) => ({
 
 // const mapDispatchToProps = (dispatch, ownProps) => PropsToMergeWith_TodoListContainer_Props;
 // Dispatch isn't really needed, connect can automatically wrap the functions with dispatch
+// This allows for actionCreators, functions that generate the action object
+
+const addTodo = () => ({
+  type: 'ADD_TODO',
+  payload: {
+    text: '',
+  },
+});
+
+const editTodo = (id, values) => ({
+  type: 'EDIT_TODO',
+  payload: { id, ...values },
+});
+
+const deleteTodo = id => ({
+  type: 'DELETE_TODO',
+  payload: { id },
+});
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addTodo: () => ({
-    type: 'ADD_TODO',
-    payload: {
-      text: '',
-    },
-  }),
-  editTodo: (id, values) => ({
-    type: 'EDIT_TODO',
-    payload: { id, ...values },
-  }),
-  deleteTodo: id => ({
-    type: 'DELETE_TODO',
-    payload: { id },
-  }),
+  addTodo,
+  editTodo,
+  deleteTodo,
 });
 
 export default connect(
