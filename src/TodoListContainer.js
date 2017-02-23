@@ -1,56 +1,30 @@
-import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import TodoList from './TodoList';
 
-type Props = {
-  subscribe: () => void,
-  getState: () => void,
-  dispatch: () => void,
-};
+// const mapStateToProps = (state, ownProps) => PropsToMergeWith_TodoListContainer_Props;
+const mapStateToProps = (state, ownProps) => ({
+  todos: state.todos,
+});
 
-class TodoListContainer extends Component {
-  props: Props
+// const mapDispatchToProps = (dispatch, ownProps) => PropsToMergeWith_TodoListContainer_Props;
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  addTodo: () => dispatch({
+    type: 'ADD_TODO',
+    payload: {
+      text: '',
+    },
+  }),
+  editTodo: (id, values) => dispatch({
+    type: 'EDIT_TODO',
+    payload: { id, ...values },
+  }),
+  deleteTodo: id => dispatch({
+    type: 'DELETE_TODO',
+    payload: { id },
+  }),
+});
 
-  constructor(props) {
-    super(props);
-    this.state = this.props.getState();
-  }
-
-  componentWillMount() {
-    this.props.subscribe(() => {
-      const newState = this.props.getState();
-
-      this.setState(newState);
-    });
-  }
-
-  render() {
-    const dispatchAdd = () => this.props.dispatch({
-      type: 'ADD_TODO',
-      payload: {
-        text: '',
-      },
-    });
-
-    const dispatchEdit = (id, values) => this.props.dispatch({
-      type: 'EDIT_TODO',
-      payload: { id, ...values },
-    });
-
-    const dispatchDelete = id => this.props.dispatch({
-      type: 'DELETE_TODO',
-      payload: { id },
-    });
-
-    return (
-      <TodoList
-        todos={this.state.todos}
-        addTodo={dispatchAdd}
-        editTodo={dispatchEdit}
-        deleteTodo={dispatchDelete}
-      />
-    );
-  }
-}
-
-export default TodoListContainer;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TodoList);
