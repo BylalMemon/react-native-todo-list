@@ -6,26 +6,9 @@
 
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
+import { createStore } from 'redux';
 
 import TodoList from './src/TodoList';
-
-const createStore = (reducer, initialState = {}) => {
-  let state = initialState;
-  const listeners = [];
-
-  const dispatch = (action) => {
-    state = reducer(state, action);
-    listeners.forEach(listener => listener());
-  };
-
-  const subscribe = (listener) => {
-    listeners.push(listener);
-  };
-
-  const getState = () => state;
-
-  return { dispatch, subscribe, getState };
-};
 
 const initialState = {
   todos: [],
