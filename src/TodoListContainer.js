@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import TodoList from './TodoList';
 
 // const mapStateToProps = (state, ownProps) => PropsToMergeWith_TodoListContainer_Props;
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   todos: state.todos,
 });
 
@@ -27,11 +27,11 @@ const deleteTodo = id => ({
   payload: { id },
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = {
   addTodo,
   editTodo,
   deleteTodo,
-});
+};
 
 export default connect(
   mapStateToProps,
